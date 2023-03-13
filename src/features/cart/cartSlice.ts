@@ -3,13 +3,12 @@ import { IBook } from "../../model/IBook";
 import { RootState } from "../../store";
 import { getCartLocalStorage } from "../../uilities";
 
-const initialState = {
-  cart: getCartLocalStorage() as IBook[],
-  isCartModal: false,
-};
 export const cartSlice = createSlice({
   name: "cart",
-  initialState,
+  initialState: {
+    cart: [] as IBook[],
+    isCartModal: false
+  },
   reducers: {
     setCart: (state, action: PayloadAction<IBook[]>) => {
       state.cart = action.payload;
@@ -28,8 +27,8 @@ export const cartSlice = createSlice({
     clearCart: (state) => {
       state.cart = [];
       localStorage.removeItem("cart");
-    },
-  },
+    }
+  }
 });
 
 export const {
@@ -37,7 +36,7 @@ export const {
   addToCart,
   cartModalToggle,
   deleteCartItem,
-  clearCart,
+  clearCart
 } = cartSlice.actions;
 export const selectCart = (state: RootState) => state.cart;
 export default cartSlice.reducer;
