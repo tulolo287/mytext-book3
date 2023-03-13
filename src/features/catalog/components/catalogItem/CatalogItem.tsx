@@ -45,6 +45,6 @@ const CatalogItem: FC<CatalogItemProps> = ({ book }) => {
 };
 
 const customComparator = (prevProps: any, nextProps: any) => {
-  return true;
+  return false;
 };
 export default React.memo(CatalogItem, customComparator);
