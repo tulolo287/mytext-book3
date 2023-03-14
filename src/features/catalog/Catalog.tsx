@@ -17,7 +17,12 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../hooks/useAppDispatchSelector";
-import { loadingOff, loadingOn, setCatalog } from "./catalogSlice";
+import {
+  loadingOff,
+  loadingOn,
+  setCatalog,
+  fetchCatalog,
+} from "./catalogSlice";
 import { addToCart } from "../cart/cartSlice";
 import React from "react";
 
@@ -28,18 +33,8 @@ export default function Catalog() {
   //const catalogMemo = useMemo(() => catalog, [catalog.length]);
   // console.log("Catalog render");
 
-  const fetchCatalog = async () => {
-    dispatch(loadingOn());
-    const res = await fetch(
-      "https://jsonplaceholder.typicode.com/photos?_limit=10"
-    );
-    const data = await res.json();
-    dispatch(setCatalog(data));
-    dispatch(loadingOff());
-  };
-
   useEffect(() => {
-    fetchCatalog();
+    dispatch(fetchCatalog());
   }, []);
 
   const [currentPage, setCurrentPage] = useState(1);

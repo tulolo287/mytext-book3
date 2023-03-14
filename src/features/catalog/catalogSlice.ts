@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IBook } from "../../model/IBook";
-import { RootState } from "../../store";
+import { RootState, AppDispatch } from "../../store";
 
 const initialState = {
   catalog: [] as IBook[],
@@ -22,6 +22,16 @@ export const catalogSlice = createSlice({
     },
   },
 });
+
+export const fetchCatalog = () => async (dispatch: AppDispatch) => {
+  dispatch(loadingOn());
+  const res = await fetch(
+    "https://jsonplaceholder.typicode.com/photos?_limit=10"
+  );
+  const data = await res.json();
+  dispatch(setCatalog(data));
+  dispatch(loadingOff());
+};
 
 export const { setCatalog, loadingOff, loadingOn } = catalogSlice.actions;
 export const selectCatalog = (state: RootState) => state.catalog;
