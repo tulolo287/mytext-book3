@@ -5,7 +5,16 @@ import { RootState, AppDispatch } from "../../store";
 const initialState = {
   catalog: [] as IBook[],
   isLoading: false,
+  error: null,
 };
+
+export const fetchCatalog = createAsyncThunk("catalog/fetchAll", async () => {
+  const res = await fetch(
+    "https://jsonplaceholder.typicode.com/photos?_limit=10"
+  );
+  const data = await res.json();
+  return data;
+});
 
 export const catalogSlice = createSlice({
   name: "catalog",
@@ -21,17 +30,21 @@ export const catalogSlice = createSlice({
       state.isLoading = false;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(fetchCatalog.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(fetchCatalog.fulfilled, (state, action) => {
+      state.catalog = action.payload;
+      state.isLoading = false;
+    });
+    builder.addCase(fetchCatalog.rejected, (state, action) => {
+      //state.error = action.error;
+      console.log("Action", action);
+      state.isLoading = true;
+    });
+  },
 });
-
-export const fetchCatalog = () => async (dispatch: AppDispatch) => {
-  dispatch(loadingOn());
-  const res = await fetch(
-    "https://jsonplaceholder.typicode.com/photos?_limit=10"
-  );
-  const data = await res.json();
-  dispatch(setCatalog(data));
-  dispatch(loadingOff());
-};
 
 export const { setCatalog, loadingOff, loadingOn } = catalogSlice.actions;
 export const selectCatalog = (state: RootState) => state.catalog;
