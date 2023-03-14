@@ -24,7 +24,8 @@ const rootReducer = combineReducers({
 });
 const persistConfig = {
   key: "root",
-  storage
+  storage,
+  blacklist: ['catalog']
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const preloadedState = {
