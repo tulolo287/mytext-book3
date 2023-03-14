@@ -10,20 +10,22 @@ import { IBook } from "../../../../model/IBook";
 import { FC, useCallback, useMemo } from "react";
 import { addToCart } from "../../../cart/cartSlice";
 import React from "react";
+import { useDispatch } from "react-redux";
+import { cartSelector, cartSelectorMemo } from "../../../cart/cartSelector";
 
 type CatalogItemProps = {
   book: IBook;
 };
 
 const CatalogItem: FC<CatalogItemProps> = ({ book }) => {
-  const bookMemo = useMemo(() => book, [book.id]);
-  const { id, title, thumbnailUrl } = bookMemo;
+  //const bookMemo = useMemo(() => book, [book.id]);
+  const { id, title, thumbnailUrl } = book;
   const dispatch = useAppDispatch();
-  const { cart } = useAppSelector((state) => state.cart);
+  //const { cart } = useAppSelector(cartSelectorMemo);
   console.log("Catalog item render");
 
   const handleAddToCart = useCallback(() => {
-    dispatch(addToCart(bookMemo));
+    dispatch(addToCart(book));
   }, []);
 
   return (
@@ -45,6 +47,6 @@ const CatalogItem: FC<CatalogItemProps> = ({ book }) => {
 };
 
 const customComparator = (prevProps: any, nextProps: any) => {
-  return false;
+  return true;
 };
-export default React.memo(CatalogItem, customComparator);
+export default CatalogItem;

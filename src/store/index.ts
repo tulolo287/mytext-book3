@@ -13,32 +13,32 @@ import {
   PAUSE,
   PERSIST,
   PURGE,
-  REGISTER
+  REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 const rootReducer = combineReducers({
   cart: cartReducer,
   catalog: catalogReducer,
-  user: userReducer
+  user: userReducer,
 });
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ['catalog']
+  blacklist: ["catalog"],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const preloadedState = {
-  cart: { cart: getCartLocalStorage(), isCartModal: false }
+  cart: { cart: getCartLocalStorage(), isCartModal: false },
 };
 const store = configureStore({
   reducer: persistedReducer,
-  middleware: getDefaultMiddleware =>
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
-      }
-    }).concat(thunk)
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }).concat(thunk),
 });
 
 store.subscribe(() => {

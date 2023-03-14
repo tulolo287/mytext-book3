@@ -25,10 +25,10 @@ export default function Catalog() {
   const { isLoading, catalog } = useAppSelector((state) => state.catalog);
   const dispatch = useAppDispatch();
 
-  const catalogMemo = useMemo(() => catalog, [catalog.length]);
-  console.log("Catalog render");
+  //const catalogMemo = useMemo(() => catalog, [catalog.length]);
+  // console.log("Catalog render");
 
-  const fetch2 = useCallback(async () => {
+  const fetchCatalog = async () => {
     dispatch(loadingOn());
     const res = await fetch(
       "https://jsonplaceholder.typicode.com/photos?_limit=10"
@@ -36,11 +36,11 @@ export default function Catalog() {
     const data = await res.json();
     dispatch(setCatalog(data));
     dispatch(loadingOff());
-  }, []);
+  };
 
   useEffect(() => {
-    fetch2();
-  }, [fetch2]);
+    fetchCatalog();
+  }, []);
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -52,10 +52,7 @@ export default function Catalog() {
 
   const endSector = currentPage * itemsPerPage;
   const startSector = endSector - itemsPerPage;
-  const booksPerPage = useMemo(
-    () => catalogMemo.slice(startSector, endSector),
-    [startSector, endSector]
-  );
+  const booksPerPage = catalog.slice(startSector, endSector);
 
   return (
     <>

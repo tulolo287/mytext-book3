@@ -7,24 +7,22 @@ import { useSelector } from "react-redux";
 import CartModal from "./components/cartModal/CartModal";
 import {
   useAppDispatch,
-  useAppSelector
+  useAppSelector,
 } from "../../hooks/useAppDispatchSelector";
-import { cartModalToggle, setCart } from "./cartSlice";
+import { cartModalToggle, selectCart, setCart } from "./cartSlice";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { IBook } from "../../model/IBook";
+import { cartSelector } from "./cartSelector";
 
 const Cart = () => {
-  const { cart, isCartModal } = useAppSelector((state) => state.cart);
+  const { cart, isCartModal } = useAppSelector(cartSelector);
 
   const dispatch = useAppDispatch();
-
- 
-   
 
   const cartStyles = {
     fontSize: 40,
     color: "white",
-    cursor: "pointer"
+    cursor: "pointer",
   };
   const handleModal = () => {
     dispatch(cartModalToggle());

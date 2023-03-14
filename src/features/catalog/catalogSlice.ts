@@ -4,7 +4,7 @@ import { RootState } from "../../store";
 
 const initialState = {
   catalog: [] as IBook[],
-  isLoading: false
+  isLoading: false,
 };
 
 export const catalogSlice = createSlice({
@@ -19,8 +19,8 @@ export const catalogSlice = createSlice({
     },
     loadingOff: (state) => {
       state.isLoading = false;
-    }
-  }
+    },
+  },
 });
 
 export const { setCatalog, loadingOff, loadingOn } = catalogSlice.actions;
