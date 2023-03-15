@@ -11,6 +11,7 @@ import Categories from "./pages/Categories";
 import Checkout from "./pages/Checkout";
 import LoginPage from "./pages/LoginPage";
 import { MainLayout } from "./layouts/MainLayout";
+import PrivateRoutes from "./components/PrivateRoutes";
 
 export default function App() {
   return (
@@ -22,7 +23,9 @@ export default function App() {
             <Route path="/books" element={<Books />} />
             <Route path="/books/:id" element={<BookItem />} />
             <Route path="/about" element={<About />} />
-            <Route path="/checkout" element={<Checkout />} />
+            <Route element={<PrivateRoutes />}>
+              <Route path="/checkout" element={<Checkout />} />
+            </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/categories" element={<Categories />} />
           </Route>
