@@ -12,6 +12,7 @@ import Checkout from "./pages/Checkout";
 import LoginPage from "./pages/LoginPage";
 import { MainLayout } from "./layouts/MainLayout";
 import PrivateRoutes from "./components/PrivateRoutes";
+import { render } from "react-dom";
 
 export default function App() {
   return (

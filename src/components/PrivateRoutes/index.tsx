@@ -5,6 +5,6 @@ import { useNavigate } from "react-router-dom";
 const PrivateRoutes = () => {
   const navigate = useNavigate();
   const auth = false;
-  return <>{auth ? <Outlet /> : <Navigate to="/" />}</>;
+  return <>{auth ? <Outlet /> : <Navigate to="/login" />}</>;
 };
 export default PrivateRoutes;
